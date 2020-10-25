@@ -31,7 +31,7 @@ anim = @animate for epoch in 1:epochs
     global θ₁ -= tmpθ₁
     cost = J(θ₀, θ₁)
     animate_graphs()
-    println(cost)
+    println("epoch: $(epoch) cost: $(cost)")
 end
 
 thetas = DataFrame(thetas = collect(unscale(θ₀, θ₁)))
