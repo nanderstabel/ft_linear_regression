@@ -4,7 +4,7 @@ using Statistics
 include("formulas.jl")
 include("graph.jl")
 
-# Read and standardize data
+# Read and standardise data
 data = CSV.read("storage/data.csv", DataFrame)
 stats = describe(data)[!, [:variable, :mean, :min, :max]]
 stats.std = [std(data.km), std(data.price)]
@@ -19,12 +19,12 @@ epochs = 100
 m = size(data)[1]
 
 function unscale(θ₀, θ₁)
-    θ₀ = θ₀ - θ₁ * (stats.mean[1] / stats.std[1])
-    θ₁ = θ₁ / stats.std[1]
+    θ₀ -= θ₁ * (stats.mean[1] / stats.std[1])
+    θ₁ /= stats.std[1]
     return θ₀, θ₁
 end
 
-anim = @animate for epoch in 1:epochs
+anim = @animate for epoch in 0:epochs
     tmpθ₀ = α * (1 / m) * 𝚺(map(estimatePrice, km) - price)
     tmpθ₁ = α * (1 / m) * 𝚺((map(estimatePrice, km) - price) .* km)
     global θ₀ -= tmpθ₀
